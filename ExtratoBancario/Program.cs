@@ -15,7 +15,7 @@ namespace ConsoleApplication1
             public char tipo;
         }
 
-        static void incluirLancamento(ref int n, lancamento[] extrato, ref double saldoFinal, ref double saldoAnterior)
+        static void incluirLancamento(ref int n, ref lancamento[] extrato, ref double saldoFinal, ref double saldoAnterior)
         {
             lancamento l;
             Console.Write("Data: ");
@@ -37,46 +37,25 @@ namespace ConsoleApplication1
 
             if (n == 10)
             {
-                for (int i = 0; i < 5; i++)
-                    saldoAnterior = saldoAnterior + extrato[i].valor;
-                for (int i = 0; i < 5; i++)
-                    extrato[i] = extrato[i + 5];
-                n = 5;
+                excluirLancamentosAntigos(ref extrato, ref saldoAnterior, ref n);
             }  
         }
 
        
-        /*Consegui implementar a lógica de remoção dos 5 ultimos lançamentos, porém não consegui
-         fazer na forma de procedimento, tem algo errado na hora de passar os parâmentros*/
 
-        /* static void excluirLancamentosAntigos(lancamento [] extrato, ref double saldoAnterior)
+         static void excluirLancamentosAntigos(ref lancamento[] extrato, ref double saldoAnterior, ref int n)
         {
-            /* Este for() soma os valores contidos nos 5 lançamentos mais antigos que serão removidos pelo
-            procedimento e os armazena na variável saldoAnterior, semelhante ao que ocorre nos bancos  
-
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++) // Esse for soma os 5 últimos saldos
                 saldoAnterior = saldoAnterior + extrato[i].valor;
-
-            /* Este for() transfere o conteúdo dos 5 lançamentos mais novos para as posições dos 5 lançamentos mais
-             antigos, liberando o espaço necessário para a inclusão de novos lançamentos
-             A lógica utilizada foi a seguinte:
-             índice    0  1  2  3  4  5
-             vetor    [1  2  3  4  5  6]              
-             Neste caso, é necessário que (Para apagar os 3 mais antigos) os três mais novos ocupem as posições
-             dos 3 ultimos, fazendo-se assim:
-             v[0] = v[3]
-             v[1] = v[4]
-             v[2] = v[5]      
              
             for (int i = 0; i < 5; i++)
                 extrato[i] = extrato[i + 5];
 
-            // O valor de n retorna a 5 pois mostra que existem 5 lançamentos no extrato, sendo assim, ao se incluir mais
-            // 5 lançamentos (chegando a 10) o procedimento será chamado novamente.
-            
-        }*/
+                n = 5; // Essa variável recebe o número de lançamentos, para que quando chegar em 10 novamente, exclua os 5 últimos
+        
+        }
 
-        static void exibirExtrato(lancamento[] extrato, int n)
+        static void exibirExtrato(ref lancamento[] extrato, int n)
         {
             int i;
             for (i = 0; i < n; i++)
@@ -87,7 +66,6 @@ namespace ConsoleApplication1
 
         static void Main(string[] args)
         {
-            lancamento x;
             lancamento[] extrato = new lancamento[10];
             int n = 0, opcaoMenu;
             double saldoAnterior = 0, saldoFinal = 0;
@@ -105,13 +83,13 @@ namespace ConsoleApplication1
                 {
                     case 1:
                         Console.Clear();
-                        incluirLancamento(ref n, extrato, ref saldoFinal, ref saldoAnterior);
+                        incluirLancamento(ref n, ref extrato, ref saldoFinal, ref saldoAnterior);
                         Console.Clear();
                         Console.WriteLine("Lançamento incluído!");
                         break;
                     case 2:
                         Console.Clear();
-                        exibirExtrato(extrato, n);
+                        exibirExtrato(ref extrato, n);
                         Console.WriteLine(("Saldo Final: {0}"), saldoFinal);
                         break;
                     case 3:
