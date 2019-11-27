@@ -65,12 +65,12 @@ namespace ConsoleApplication1
         static void exibirExtrato(lancamento[] extrato, int n, double saldoAnterior, double saldoFinal)
         {
             int i;
-            Console.WriteLine("Saldo Anterior: R${0}", saldoAnterior);
+            Console.WriteLine("Saldo Anterior: R${0}\n", saldoAnterior);
             for (i = 0; i < n; i++)
             {
                 Console.WriteLine("{0} - {1} -  R$ {2}  Tipo: {3}", extrato[i].data, extrato[i].descricao, extrato[i].valor, extrato[i].tipo);
             }
-            Console.WriteLine("Saldo Final: R${0}", saldoFinal);
+            Console.WriteLine("\nSaldo Final: R${0}", saldoFinal);
         }
 
         static void Main(string[] args)
